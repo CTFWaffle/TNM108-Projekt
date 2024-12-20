@@ -102,7 +102,7 @@ from scipy.sparse import hstack, csr_matrix
 # 'beer_style', 'beer_name', 'review_aroma', 'review_appearance', 'review_palate', 'review_taste'
 
 # Combine text columns to create a 'beer_description'
-beers['beer_description'] = beers['beer_style'] + ' ' + beers['beer_name']
+beers['beer_description'] = beers['beer_style'] #+ ' ' + beers['beer_name']
 
 # Initialize the CountVectorizer
 vectorizer = CountVectorizer()
@@ -131,19 +131,52 @@ def process_in_chunks(sparse_matrix, chunk_size=1000):
         chunk = sparse_matrix[start:end].todense()
         yield chunk
 
-# Process and print the shape of each chunk
-for chunk in process_in_chunks(combined_vectors):
-    print(chunk.shape)
-    # Process each chunk as needed
-    # For example, you can save each chunk to a file or perform further analysis
+from sklearn.metrics.pairwise import cosine_similarity
 
-# Example: Print the vectorized representation of the first beer (optional)
-first_chunk = next(process_in_chunks(combined_vectors, chunk_size=1))
-print(first_chunk[0])
-input("Press Enter to continue...") #Pause
+# Take user input
+user_beer_style = input("Enter Beer Style: ")
+#user_beer_name = input("Enter Beer Name: ")
+user_aroma = float(input("Enter Aroma (0-5): "))
+user_appearance = float(input("Enter Appearance (0-5): "))
+user_palate = float(input("Enter Palate (0-5): "))
+user_taste = float(input("Enter Taste (0-5): "))
+
+# Combine user input text
+user_description = user_beer_style #+ ' ' + user_beer_name
+
+# Vectorize user input text
+user_text_vector = vectorizer.transform([user_description])
+
+# Scale user input numerical data
+user_numerical_data = scaler.transform([[user_aroma, user_appearance, user_palate, user_taste]])
+
+# Concatenate user text and numerical vectors
+user_vector = hstack([user_text_vector, user_numerical_data]).tocsr()
+
+# Compute cosine similarity between user vector and combined vectors
+similarities = cosine_similarity(user_vector, combined_vectors)
+
+# Find the 5 most similar beers
+most_similar_indices = similarities[0].argsort()[-5:][::-1]
+most_similar_beers = beers.iloc[most_similar_indices]
+
+print("5 most similar beers:")
+print(most_similar_beers)
+
+# Find the most similar beer
+most_similar_index = similarities.argmax()
+most_similar_beer = beers.iloc[most_similar_index]
+
+print("Most similar beer:")
+print(most_similar_beer)
+
+
 #-----------------------------------------------From lab 4------------------------------------------------#
+'''
+tfidf_vectorizer = TfidfVectorizer()
 
-d1 = (beers.iloc[0])
+
+d1 = beers.iloc[0]
 d2 = beers.iloc[1]
 d3 = beers.iloc[2]
 d4 = beers.iloc[3]
@@ -215,3 +248,4 @@ print(tfidf_matrix.shape)
 from sklearn.metrics.pairwise import cosine_similarity
 cos_similarity = cosine_similarity(tfidf_matrix[0], tfidf_matrix)
 print(cos_similarity)
+'''
