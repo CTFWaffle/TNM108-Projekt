@@ -11,7 +11,7 @@ import concurrent.futures
 def load_data():
     # Load the dataset in chunks
     chunk_size = 1000
-    chunks = pd.read_csv('E:/Programmering/TNM108-Projekt/Datasets/beer_reviews_cleaned.csv', chunksize=chunk_size)
+    chunks = pd.read_csv('c:/Users/erika/Documents/GitHub/TNM108-Projekt/Datasets/beer_reviews_cleaned.csv', chunksize=chunk_size)
 
     # Initialize empty DataFrame to store processed chunks
     beers = pd.DataFrame()
@@ -82,17 +82,32 @@ common_styles = [
 if 'selected_style' not in st.session_state:
     st.session_state.selected_style = ""
 
+st.sidebar.image("C:/Users/erika/Pictures/beer.jpg", use_container_width=True)
+
 # Display buttons for each beer style in the sidebar
-st.sidebar.write("Select a Beer Style:")
+st.sidebar.write("Select a Beer Style:",)
 
 # CSS to adjust button margins and spacing dynamically
 button_style = """
     <style>
     .stButton button {
         white-space: nowrap;   /* Prevents text wrapping within buttons */
+        background-color:rgba(90, 69, 12, 0.89); /* Change to your desired color */
+        color: black; /* Optional: Change text color */
     }
     </style>
 """
+
+st.markdown("""
+<style>
+    [data-testid=stSidebar] {
+        background-color:rgba(185, 133, 54, 0.87);
+    }
+</style>
+""", unsafe_allow_html=True)
+
+
+
 st.sidebar.markdown(button_style, unsafe_allow_html=True)
 
 # Dynamically create buttons row by row

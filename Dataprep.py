@@ -5,7 +5,7 @@ import numpy as np
 
 #----------------------Prepairing Data----------------------#
 # Load the Beer_reviews dataset
-beerdir = 'E:/Programmering/TNM108-Projekt/Datasets/beer_reviews.csv'
+beerdir = 'c:/Users/erika/Documents/GitHub/TNM108-Projekt/Datasets/beer_reviews.csv'
 
 beers = pd.read_csv(beerdir)
       
@@ -21,4 +21,4 @@ beers = beers[['brewery_name','review_time', 'review_profilename','review_overal
 beers['review_time'] = pd.to_datetime(beers['review_time'], unit='s')
 
 #Save the new dataset
-beers.to_csv('E:/Programmering/TNM108-Projekt/Datasets/beer_reviews_cleaned.csv', index=False)
+beers.to_csv('c:/Users/erika/Documents/GitHub/TNM108-Projekt/Datasets/beer_reviews_cleaned.csv', index=False)
