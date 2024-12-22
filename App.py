@@ -82,7 +82,7 @@ common_styles = [
 if 'selected_style' not in st.session_state:
     st.session_state.selected_style = ""
 
-st.sidebar.image("C:/Users/erika/Pictures/beer.jpg", use_container_width=True)
+st.sidebar.image("C:/Users/erika/Documents/GitHub/Beer-Projekt/beer.jpg", use_container_width=True)
 
 # Display buttons for each beer style in the sidebar
 st.sidebar.write("Select a Beer Style:",)
