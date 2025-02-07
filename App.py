@@ -137,7 +137,7 @@ if free_text_style:
 if not skip_beer_style:
     st.sidebar.write(f"Selected Beer Style: {st.session_state.selected_style}")
 
-### SLIDER COLOR START ###
+#Slider colors:
 NB = 100
 
 # Hide default slider track background
@@ -181,8 +181,6 @@ col = f'''
     </style>
     '''
 st.markdown(col, unsafe_allow_html=True)
-
-### SLIDER COLOR END ###
 
 # Take user input
 user_aroma = st.sidebar.slider("Enter Aroma: ", min_value=0.0, max_value=5.0, step=0.1)
