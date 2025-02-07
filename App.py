@@ -137,12 +137,60 @@ if free_text_style:
 if not skip_beer_style:
     st.sidebar.write(f"Selected Beer Style: {st.session_state.selected_style}")
 
+### SLIDER COLOR START ###
+NB = 100
+
+# Hide default slider track background
+st.markdown('''
+    <style>
+        div.stSlider > div[data-baseweb="slider"] > div[data-testid="stTickBar"] > div {
+            background: transparent;
+        }
+    </style>
+    ''', unsafe_allow_html=True)
+
+# Change slider cursor (thumb) color
+st.markdown('''
+    <style>
+        div.stSlider > div[data-baseweb="slider"] > div > div > div[role="slider"] {
+            background-color: #DAA520 !important; /* Warm golden-yellow */
+            box-shadow: rgba(218, 165, 32, 0.4) 0px 0px 0px 0.2rem;
+        }
+    </style>
+    ''', unsafe_allow_html=True)
+
+# Change slider number label color
+st.markdown('''
+    <style>
+        div.stSlider > div[data-baseweb="slider"] > div > div > div > div {
+            color: #DAA520 !important;
+        }
+    </style>
+    ''', unsafe_allow_html=True)
+
+# Fix color gradient issue (eliminating splotch at start)
+col = f'''
+    <style>
+        div.stSlider > div[data-baseweb="slider"] > div > div {{
+            background: linear-gradient(to right, 
+                                       rgba(218, 165, 32, 1) {NB}%, 
+                                       rgba(218, 165, 32, 1) {NB + 1}%, 
+                                       rgba(151, 166, 195, 0.25) {NB + 1}%, 
+                                       rgba(151, 166, 195, 0.25) 100%);
+        }}
+    </style>
+    '''
+st.markdown(col, unsafe_allow_html=True)
+
+### SLIDER COLOR END ###
 
 # Take user input
 user_aroma = st.sidebar.slider("Enter Aroma: ", min_value=0.0, max_value=5.0, step=0.1)
 user_appearance = st.sidebar.slider("Enter Appearance: ", min_value=0.0, max_value=5.0, step=0.1)
 user_palate = st.sidebar.slider("Enter Palate: ", min_value=0.0, max_value=5.0, step=0.1)
 user_taste = st.sidebar.slider("Enter Taste: ", min_value=0.0, max_value=5.0, step=0.1)
+
+
 
 if st.button("Find Similar Beers"):
     # Display a progress bar
